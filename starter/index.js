@@ -11,33 +11,83 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
 const Employee = require("./lib/Employee");
 
-inquirer.prompt([{
-    type: "input",
-    message: "Please enter your name",
-    name: "name",
-    },
-    {
-    type: "input",
-    message: "Please enter your ID",
-    name: "id",
-    },
-    {
-    type: "input",
-    message: "Please enter your email",
-    name: "email",
-    },
-    {
-    type: "input",
-    message: "Please enter your office number",
-    name: "officeNumber",
-    },
+//Team member array creates a blank array to add members to. 
+const TeamMemberArray = [] 
 
-    //manager questions
+//adds a manager to the team members array by creating prompts for intputs
+const managerPrompt = () => {
+    // not sure if return is needed here? could be a the end or not at all... 
+    return inquirer.prompt([{
+        type: "input",
+        message: "Please enter your name",
+        name: "name",
+        },
+        {
+        type: "input",
+        message: "Please enter your ID",
+        name: "id",
+        },
+        {
+        type: "input",
+        message: "Please enter your email",
+        name: "email",
+        },
+        {
+        type: "input",
+        message: "Please enter your office number",
+        name: "officeNumber",
+        },
+
+        //manager questions
+        ]).then(response => { 
+        console.log("Thanks for entering your data");
+        
+        // populate manager info
+        
+        const  {name, id, email, officeNumber} = response; 
+        const manager = new Manager (name, id, email, officeNumber)
+        
+        TeamMemberArray.push(manager)
+        console.log(manager) 
+        //   
+        // promptForNexEmployee ()
+        selectTeamMemberPrompt()
+    })
+}
+
+managerPrompt();
+
+
+selectTeamMemberPrompt = () => {
+    return inquirer.prompt([
+        {
+        type: "choice",
+        message: "Manager",
+        name: "manager"
+        },
+         {
+        type: "choice",
+        message: "Engineer",
+        name: "engineer"
+        },
+        {
+        type: "choice",
+        message: "Intern",
+        name: "intern"
+        },
     ]).then(response => { 
-    console.log("Thanks for entering your data");    
-    // populate manager info
-    // promptForNexEmployee ()
-})
+        console.log("Thanks for entering your data");
+            if (response === "manager") {
+                return managerPrompt(); 
+            } else if (response === "engineer") {
+                return engineerPrompt();
+            } else if (response === "intern") {
+                return internPrompt(); 
+            }
+
+     })
+}; 
+ 
 
 // const promptForNextEmployee = () => {
 //     inquirer.prompt([{
@@ -52,14 +102,87 @@ inquirer.prompt([{
 //     })
 // }
 
-// const promptForEngineer = () => {
-//     inquirer.prompt([{
-//         //engineer questions
-//     }]).then(response => {
-//         // add new engineer to employees array
-//         // promptForNextEmployee
-//     })
-// }
+const engineerPrompt = () => {
+    return inquirer.prompt([{
+        type: "input",
+        message: "Please enter your name",
+        name: "name",
+        },
+        {
+        type: "input",
+        message: "Please enter your ID",
+        name: "id",
+        },
+        {
+        type: "input",
+        message: "Please enter your email",
+        name: "email",
+        },
+        {
+        type: "input",
+        message: "Please enter your gitHub username",
+        name: "github",
+        },
+
+        //manager questions
+        ]).then(response => { 
+        console.log("Thanks for entering your data");
+        
+        // populate engineer info
+        
+        const  {name, id, email, github} = response; 
+        const engineer = new Engineer (name, id, email, github);
+        
+        TeamMemberArray.push(engineer);
+        console.log(engineer);
+        
+       //engineer questions
+    
+    })
+}
+
+// engineerPrompt();
+
+const internPrompt = () => {
+    return inquirer.prompt([{
+        type: "input",
+        message: "Please enter your name",
+        name: "name",
+        },
+        {
+        type: "input",
+        message: "Please enter your ID",
+        name: "id",
+        },
+        {
+        type: "input",
+        message: "Please enter your email",
+        name: "email",
+        },
+        {
+        type: "input",
+        message: "Please enter your gitHub username",
+        name: "github",
+        },
+
+        //manager questions
+        ]).then(response => { 
+        console.log("Thanks for entering your data");
+        
+        // populate engineer info
+        
+        const  {name, id, email, github} = response; 
+        const intern = new Intern (name, id, email, github);
+        
+        TeamMemberArray.push(intern);
+        console.log(intern);
+        
+       //engineer questions
+    
+    })
+}
+
+// internPrompt();
 
 // const promptForIntern = () => {
 //     inquirer.prompt([{
@@ -74,7 +197,7 @@ inquirer.prompt([{
 // }
 
 // const buildPage = () => {
-// // render(myArrayOfTeamMembers)
+// // render(ArrayOfTeamMembers)
 // }
 // // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
@@ -116,6 +239,11 @@ inquirer.prompt([{
 //     })
 // }
 
-const buildPage = () => {
-// render(myArrayOfTeamMembers)
-}
+// const buildPage = () => {
+//     const testArray = []
+//     testArray.push(new Manager ("Dan..", "the man"));
+//     console.log(render(testArray));
+//     console.log(render(testArray)); 
+// // render(TeamMemberArray)
+// }
+// buildPage(); 
