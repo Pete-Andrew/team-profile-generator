@@ -5,13 +5,7 @@ class Engineer extends Employee {
     constructor(name, id, email, github) {
       super(name, id, email); 
         this.github = github;
-      
-    }
-  
-    printInfo() {
-      for (const key in this) {
-        console.log(`${key}: ${this[key]}`);
-      }
+        getRole(Engineer); 
     }
   }
   
