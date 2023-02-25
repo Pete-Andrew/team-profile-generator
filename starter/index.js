@@ -77,17 +77,23 @@ selectTeamMemberPrompt = () => {
         const position = `${response.employeePosition}`;
         console.log("The employee position selected is: " + position);
        
-        if (position === "Manager") {
-                managerPrompt(); 
-            } else if (position === "Engineer") {
-                engineerPrompt();
-            } else if (position === "Intern") {
-                internPrompt(); 
-            } 
-            // else (console.log("not working"));
+        promptForNextEmployee(position);
+        
 
      })
 }; 
+
+const promptForNextEmployee = (position) => {
+if (position === "Manager") {
+    managerPrompt(); 
+} else if (position === "Engineer") {
+    engineerPrompt();
+} else if (position === "Intern") {
+    internPrompt(); 
+} 
+}; 
+
+// else (console.log("not working"));
  
 
 // const promptForNextEmployee = () => {
@@ -129,6 +135,7 @@ const engineerPrompt = () => {
         ]).then(response => { 
         console.log("Thanks for entering your data");
         
+        
         // populate engineer info
         
         const  {name, id, email, github} = response; 
@@ -137,12 +144,12 @@ const engineerPrompt = () => {
         TeamMemberArray.push(engineer);
         console.log(engineer);
         
-       //engineer questions
+        selectTeamMemberPrompt();
     
     })
 }
 
-// engineerPrompt();
+// internPrompt();
 
 const internPrompt = () => {
     return inquirer.prompt([{
@@ -178,6 +185,7 @@ const internPrompt = () => {
         TeamMemberArray.push(intern);
         console.log(intern);
         
+        selectTeamMemberPrompt();
        //engineer questions
     
     })
