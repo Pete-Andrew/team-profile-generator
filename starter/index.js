@@ -54,9 +54,8 @@ const managerPrompt = () => {
         selectTeamMemberPrompt();
     })
 }
-
+//mamager prompt called here because it always runs first.
 managerPrompt();
-
 
 selectTeamMemberPrompt = () => {
     return inquirer.prompt([
@@ -65,9 +64,9 @@ selectTeamMemberPrompt = () => {
         message: "please choose next employee to add",
         name: "employeePosition",
         choices: [
-            "Manager",
             "Engineer",
             "Intern",
+            "Finish building team"
             ], 
         } 
 
@@ -79,35 +78,20 @@ selectTeamMemberPrompt = () => {
        
         promptForNextEmployee(position);
         
-
      })
 }; 
 
 const promptForNextEmployee = (position) => {
-if (position === "Manager") {
-    managerPrompt(); 
-} else if (position === "Engineer") {
+if (position === "Engineer") {
     engineerPrompt();
 } else if (position === "Intern") {
     internPrompt(); 
-} 
+} else {
+    (position === "Finish building team") 
+        renderPage();
+    }
+
 }; 
-
-// else (console.log("not working"));
- 
-
-// const promptForNextEmployee = () => {
-//     inquirer.prompt([{
-//         // choice of 3
-//     }]).then(response => {
-//         // if engineer
-//         //    promptForEngineer
-//         // else if intern
-//         //    promptForIntern
-//         // else
-//         //    use the functionality from page-template to generate the team
-//     })
-// }
 
 const engineerPrompt = () => {
     return inquirer.prompt([{
@@ -131,12 +115,8 @@ const engineerPrompt = () => {
         name: "github",
         },
 
-        //manager questions
         ]).then(response => { 
         console.log("Thanks for entering your data");
-        
-        
-        // populate engineer info
         
         const  {name, id, email, github} = response; 
         const engineer = new Engineer (name, id, email, github);
@@ -148,8 +128,6 @@ const engineerPrompt = () => {
     
     })
 }
-
-// internPrompt();
 
 const internPrompt = () => {
     return inquirer.prompt([{
@@ -173,12 +151,9 @@ const internPrompt = () => {
         name: "github",
         },
 
-        //manager questions
         ]).then(response => { 
         console.log("Thanks for entering your data");
-        
-        // populate engineer info
-        
+            
         const  {name, id, email, github} = response; 
         const intern = new Intern (name, id, email, github);
         
@@ -186,24 +161,16 @@ const internPrompt = () => {
         console.log(intern);
         
         selectTeamMemberPrompt();
-       //engineer questions
-    
+           
     })
 }
 
-// internPrompt();
 
-// const promptForIntern = () => {
-//     inquirer.prompt([{
-        
-        
-        
-//         //intern questions
-//     }]).then(response => {
-//         // add new intern to employees array
-//         // promptForNextEmployee
-//     })
-// }
+function renderPage () {
+    console.log("woo");
+    console.log(TeamMemberArray); 
+    
+}
 
 // const buildPage = () => {
 // // render(ArrayOfTeamMembers)
