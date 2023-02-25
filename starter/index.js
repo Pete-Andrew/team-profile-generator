@@ -16,6 +16,8 @@ const TeamMemberArray = []
 
 //adds a manager to the team members array by creating prompts for intputs
 const managerPrompt = () => {
+    
+    console.log("The employee position selected is: Manager")
     // not sure if return is needed here? could be a the end or not at all... 
     return inquirer.prompt([{
         type: "input",
@@ -48,8 +50,8 @@ const managerPrompt = () => {
         const manager = new Manager (name, id, email, officeNumber)
         
         TeamMemberArray.push(manager)
-        console.log(manager) 
-        //   
+        // console.log(manager) 
+           
         // promptForNexEmployee ()
         selectTeamMemberPrompt();
     })
@@ -122,7 +124,7 @@ const engineerPrompt = () => {
         const engineer = new Engineer (name, id, email, github);
         
         TeamMemberArray.push(engineer);
-        console.log(engineer);
+        // console.log(engineer);
         
         selectTeamMemberPrompt();
     
@@ -158,7 +160,7 @@ const internPrompt = () => {
         const intern = new Intern (name, id, email, github);
         
         TeamMemberArray.push(intern);
-        console.log(intern);
+        // console.log(intern);
         
         selectTeamMemberPrompt();
            
@@ -167,17 +169,33 @@ const internPrompt = () => {
 
 
 function renderPage () {
-    console.log("woo");
     console.log(TeamMemberArray); 
-
+    console.log(render(TeamMemberArray));
+    fs.createWriteStream("team.HTML", TeamMemberArray, (err) =>
+    err ? console.error(err) : console.log("Generating README...")
+    ); 
+    
 };
+
+// fs.createWriteStream("./output/team.HTML", TeamMemberArray, (err) =>
+//     err ? console.error(err) : console.log("Generating README...")
+//     ); 
+    
+
+// fs.createWriteStream("output.html", TeamMemberArray, (err) =>
+// err ? console.error(err) : console.log("Generating README...")
+// ); 
+
+
+
+// fs.writeFile("README.md", TeamMemberArray, (err) =>
+// err ? console.error(err) : console.log("Generating README...")
+// );
 
 // const buildPage = () => {
 // // render(ArrayOfTeamMembers)
 // }
 // // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
-
 
 
 // const buildPage = () => {
