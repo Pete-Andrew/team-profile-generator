@@ -12,7 +12,7 @@ const render = require("./src/page-template.js");
 const Employee = require("./lib/Employee");
 
 //Team member array creates a blank array to add members to. 
-const TeamMemberArray = [] 
+const teamMemberArray = [] 
 
 //adds a manager to the team members array by creating prompts for intputs
 const managerPrompt = () => {
@@ -49,7 +49,7 @@ const managerPrompt = () => {
         const  {name, id, email, officeNumber} = response; 
         const manager = new Manager (name, id, email, officeNumber)
         
-        TeamMemberArray.push(manager)
+        teamMemberArray.push(manager)
         // console.log(manager) 
            
         // promptForNexEmployee ()
@@ -123,7 +123,7 @@ const engineerPrompt = () => {
         const  {name, id, email, github} = response; 
         const engineer = new Engineer (name, id, email, github);
         
-        TeamMemberArray.push(engineer);
+        teamMemberArray.push(engineer);
         // console.log(engineer);
         
         selectTeamMemberPrompt();
@@ -159,7 +159,7 @@ const internPrompt = () => {
         const  {name, id, email, github} = response; 
         const intern = new Intern (name, id, email, github);
         
-        TeamMemberArray.push(intern);
+        teamMemberArray.push(intern);
         // console.log(intern);
         
         selectTeamMemberPrompt();
@@ -169,28 +169,20 @@ const internPrompt = () => {
 
 
 function renderPage () {
-    console.log(TeamMemberArray); 
-    console.log(render(TeamMemberArray));
-    fs.createWriteStream("team.HTML", TeamMemberArray, (err) =>
-    err ? console.error(err) : console.log("Generating README...")
+    console.log(teamMemberArray); 
+    console.log(render(teamMemberArray));
+
+    const woo = render(teamMemberArray)
+        
+const buildPage = () => {
+    fs.writeFileSync("./output/team.HTML", woo , (err) =>
+    err ? console.error(err) : console.log("Generating HTML...")
     ); 
+    }
     
+    buildPage();
 };
 
-// fs.createWriteStream("./output/team.HTML", TeamMemberArray, (err) =>
-//     err ? console.error(err) : console.log("Generating README...")
-//     ); 
-    
-
-// fs.createWriteStream("output.html", TeamMemberArray, (err) =>
-// err ? console.error(err) : console.log("Generating README...")
-// ); 
-
-
-
-// fs.writeFile("README.md", TeamMemberArray, (err) =>
-// err ? console.error(err) : console.log("Generating README...")
-// );
 
 // const buildPage = () => {
 // // render(ArrayOfTeamMembers)
@@ -203,6 +195,6 @@ function renderPage () {
 //     testArray.push(new Manager ("Dan..", "the man"));
 //     console.log(render(testArray));
 //     console.log(render(testArray)); 
-// // render(TeamMemberArray)
+// // render(teamMemberArray)
 // }
-// buildPage(); 
+// buildPage();
