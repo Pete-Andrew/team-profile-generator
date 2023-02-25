@@ -51,7 +51,7 @@ const managerPrompt = () => {
         console.log(manager) 
         //   
         // promptForNexEmployee ()
-        selectTeamMemberPrompt()
+        selectTeamMemberPrompt();
     })
 }
 
@@ -61,29 +61,30 @@ managerPrompt();
 selectTeamMemberPrompt = () => {
     return inquirer.prompt([
         {
-        type: "choice",
-        message: "Manager",
-        name: "manager"
-        },
-         {
-        type: "choice",
-        message: "Engineer",
-        name: "engineer"
-        },
-        {
-        type: "choice",
-        message: "Intern",
-        name: "intern"
-        },
+        type: "list",
+        message: "please choose next employee to add",
+        name: "employeePosition",
+        choices: [
+            "Manager",
+            "Engineer",
+            "Intern",
+            ], 
+        } 
+
     ]).then(response => { 
         console.log("Thanks for entering your data");
-            if (response === "manager") {
-                return managerPrompt(); 
-            } else if (response === "engineer") {
-                return engineerPrompt();
-            } else if (response === "intern") {
-                return internPrompt(); 
-            }
+       
+        const position = `${response.employeePosition}`;
+        console.log("The employee position selected is: " + position);
+       
+        if (position === "Manager") {
+                managerPrompt(); 
+            } else if (position === "Engineer") {
+                engineerPrompt();
+            } else if (position === "Intern") {
+                internPrompt(); 
+            } 
+            // else (console.log("not working"));
 
      })
 }; 
