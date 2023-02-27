@@ -192,5 +192,5 @@ const buildPage = () => {
     buildPage();
 };
 
-//With thanks to Dan MUeller for hints on the overall layout of the code. 
+//With thanks to Dan Mueller for hints on the overall layout of the code. 
 
