@@ -18,8 +18,8 @@ const teamMemberArray = []
 const managerPrompt = () => {
     
     console.log("The employee position selected is: Manager")
-    // not sure if return is needed here? could be a the end or not at all... 
-    return inquirer.prompt([{
+    //sets questions for response data   
+    inquirer.prompt([{
         type: "input",
         message: "Please enter your name",
         name: "name",
@@ -40,27 +40,32 @@ const managerPrompt = () => {
         name: "officeNumber",
         },
 
-        //manager questions
+        
         ]).then(response => { 
         console.log("Thanks for entering your data");
         
-        // populate manager info
+        // populate manager info:
         
-        const  {name, id, email, officeNumber} = response; 
+        //below is an ES6 destructuring assignment: In ES6 you no longer have to get the object itself and assign variables for each property you want on separate lines.
+        //this const stamemnt therefore creates an object with parameters and fills those parameters with data created by the prompt response.
+        const {name, id, email, officeNumber} = response; 
+
+        //creates a variable from a new constructor with the parameters given.
         const manager = new Manager (name, id, email, officeNumber)
         
+        // pushes the manager to the team member array. 
         teamMemberArray.push(manager)
-        // console.log(manager) 
-           
-        // promptForNexEmployee ()
+                    
+        // calls the function that allows for team member selection.
         selectTeamMemberPrompt();
     })
+  
 }
 //mamager prompt called here because it always runs first.
 managerPrompt();
-
+//THEN extra team members can be selected OR finish build team.
 selectTeamMemberPrompt = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
         type: "list",
         message: "please choose next employee to add",
@@ -76,13 +81,14 @@ selectTeamMemberPrompt = () => {
         console.log("Thanks for entering your data");
        
         const position = `${response.employeePosition}`;
-        console.log("The employee position selected is: " + position);
+        // console.log("The employee position selected is: " + position);
        
         promptForNextEmployee(position);
         
      })
 }; 
 
+//calls functions based on the above response for team member
 const promptForNextEmployee = (position) => {
 if (position === "Engineer") {
     engineerPrompt();
@@ -95,8 +101,9 @@ if (position === "Engineer") {
 
 }; 
 
+// engineer prompt.
 const engineerPrompt = () => {
-    return inquirer.prompt([{
+    inquirer.prompt([{
         type: "input",
         message: "Please enter your name",
         name: "name",
@@ -131,8 +138,9 @@ const engineerPrompt = () => {
     })
 }
 
+// intern prompt
 const internPrompt = () => {
-    return inquirer.prompt([{
+    inquirer.prompt([{
         type: "input",
         message: "Please enter your name",
         name: "name",
@@ -167,15 +175,16 @@ const internPrompt = () => {
     });
 };
 
-
+//renders the page to an HTML document
 function renderPage () {
-    console.log(teamMemberArray); 
-    console.log(render(teamMemberArray));
+    // console.log(teamMemberArray); 
+    // console.log(render(teamMemberArray));
 
-    const woo = render(teamMemberArray)
+    //in order for the build page fs.writesync to work, render(teamMemberArray) needs to be turned into a const or the build page function returns an error (needs to be a TypedArray)
+    const constTeamMemberArray = render(teamMemberArray)
         
 const buildPage = () => {
-    fs.writeFileSync("./output/team.HTML", woo , (err) =>
+    fs.writeFileSync("./output/team.HTML", constTeamMemberArray , (err) =>
     err ? console.error(err) : console.log("Generating HTML...")
     ); 
     }
@@ -183,18 +192,5 @@ const buildPage = () => {
     buildPage();
 };
 
+//With thanks to Dan MUeller for hints on the overall layout of the code. 
 
-// const buildPage = () => {
-// // render(ArrayOfTeamMembers)
-// }
-// // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
-
-// const buildPage = () => {
-//     const testArray = []
-//     testArray.push(new Manager ("Dan..", "the man"));
-//     console.log(render(testArray));
-//     console.log(render(testArray)); 
-// // render(teamMemberArray)
-// }
-// buildPage();
