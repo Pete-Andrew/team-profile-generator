@@ -1,9 +1,10 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
+const {prompt} = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const {managerQuestions, engineerQuestions, internQuestions} = require("./lib/questions.js");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -19,37 +20,14 @@ const managerPrompt = () => {
     
     console.log("The employee position selected is: Manager")
     //sets questions for response data   
-    inquirer.prompt([{
-        type: "input",
-        message: "Please enter your name",
-        name: "name",
-        },
-        {
-        type: "input",
-        message: "Please enter your ID",
-        name: "id",
-        },
-        {
-        type: "input",
-        message: "Please enter your email",
-        name: "email",
-        },
-        {
-        type: "input",
-        message: "Please enter your office number",
-        name: "officeNumber",
-        },
-
-        
-        ]).then(response => { 
+    prompt(managerQuestions).then(({name, id, email, officeNumber}) => { 
         console.log("Thanks for entering your data");
         
         // populate manager info:
         
         //below is an ES6 destructuring assignment: In ES6 you no longer have to get the object itself and assign variables for each property you want on separate lines.
         //this const stamemnt therefore creates an object with parameters and fills those parameters with data created by the prompt response.
-        const {name, id, email, officeNumber} = response; 
-
+        
         //creates a variable from a new constructor with the parameters given.
         const manager = new Manager (name, id, email, officeNumber)
         
@@ -65,7 +43,7 @@ const managerPrompt = () => {
 managerPrompt();
 //THEN extra team members can be selected OR finish build team.
 selectTeamMemberPrompt = () => {
-    inquirer.prompt([
+    prompt([
         {
         type: "list",
         message: "please choose next employee to add",
@@ -103,31 +81,9 @@ if (position === "Engineer") {
 
 // engineer prompt.
 const engineerPrompt = () => {
-    inquirer.prompt([{
-        type: "input",
-        message: "Please enter your name",
-        name: "name",
-        },
-        {
-        type: "input",
-        message: "Please enter your ID",
-        name: "id",
-        },
-        {
-        type: "input",
-        message: "Please enter your email",
-        name: "email",
-        },
-        {
-        type: "input",
-        message: "Please enter your gitHub username",
-        name: "github",
-        },
-
-        ]).then(response => { 
+    prompt(engineerQuestions).then(({name, id, email, github}) => { 
         console.log("Thanks for entering your data");
         
-        const  {name, id, email, github} = response; 
         const engineer = new Engineer (name, id, email, github);
         
         teamMemberArray.push(engineer);
@@ -140,31 +96,9 @@ const engineerPrompt = () => {
 
 // intern prompt
 const internPrompt = () => {
-    inquirer.prompt([{
-        type: "input",
-        message: "Please enter your name",
-        name: "name",
-        },
-        {
-        type: "input",
-        message: "Please enter your ID",
-        name: "id",
-        },
-        {
-        type: "input",
-        message: "Please enter your email",
-        name: "email",
-        },
-        {
-        type: "input",
-        message: "Please enter your gitHub username",
-        name: "github",
-        },
-
-        ]).then(response => { 
-        console.log("Thanks for entering your data");
-            
-        const  {name, id, email, github} = response; 
+    prompt(internQuestions).then(({name, id, email, github}) => { 
+        console.log("Thanks for entering your data");        
+        
         const intern = new Intern (name, id, email, github);
         
         teamMemberArray.push(intern);
