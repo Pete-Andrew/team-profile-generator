@@ -62,7 +62,7 @@ const internQuestions = [
   },
   {
     type: "input",
-    message: "Please enter your gitHub username",
+    message: "Please enter your school",
     name: "github",
   },
 ];
